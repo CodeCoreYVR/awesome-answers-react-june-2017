@@ -5,6 +5,7 @@ import {
   Link
 } from 'react-router-dom';
 import QuestionsIndexPage from './pages/QuestionsIndexPage';
+import QuestionsShowPage from './pages/QuestionsShowPage';
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
           <h1>Awesome Answers</h1>
           <Route exact path='/' component={QuestionsIndexPage} />
           <Route exact path='/questions' component={QuestionsIndexPage} />
+          <Route path='/questions/:id' component={QuestionsShowPage} />
         </div>
       </Router>
     );
