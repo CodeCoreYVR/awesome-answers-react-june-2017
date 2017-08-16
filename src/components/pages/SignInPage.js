@@ -10,12 +10,13 @@ class SignInPage extends Component {
   }
 
   createToken (params) {
+    const {onSignIn = () => {}} = this.props;
     Token
       .post(params)
       .then(({jwt}) => {
         window.localStorage.setItem('jwt', jwt);
-        // console.log();
         this.props.history.push(`/`);
+        onSignIn();
       });
   }
 

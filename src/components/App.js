@@ -22,6 +22,7 @@ class App extends Component {
     };
 
     this.signOut = this.signOut.bind(this);
+    this.signIn = this.signIn.bind(this);
   }
 
   componentDidMount () {
@@ -32,6 +33,10 @@ class App extends Component {
     event.preventDefault();
     window.localStorage.removeItem('jwt');
     this.setState({isSignedIn: false});
+  }
+
+  signIn () {
+    this.setState({isSignedIn: true});
   }
 
   // a getter, use it as if its a property
@@ -55,10 +60,10 @@ class App extends Component {
             {
               isSignedIn
               ? ([
-                <span>
+                <span key={0}>
                   Hello, {currentUser.firstName} {currentUser.lastName}!
                 </span>,
-                <a href onClick={this.signOut}>
+                <a key={1} href onClick={this.signOut}>
                   Sign out
                 </a>
               ]) : (
@@ -69,7 +74,10 @@ class App extends Component {
           <h1>Awesome Answers</h1>
           <Switch>
             <Route exact path='/' component={HomePage} />
-            <Route exact path='/sign_in' component={SignInPage} />
+            <Route
+              exact
+              path='/sign_in'
+              render={props => <SignInPage {...props} onSignIn={this.signIn} />} />
             <AuthRoute
               exact
               isAuthenticated={isSignedIn}
@@ -80,7 +88,10 @@ class App extends Component {
               isAuthenticated={isSignedIn}
               path='/questions/new'
               component={QuestionsNewPage} />
-            <Route path='/questions/:id' component={QuestionsShowPage} />
+            <AuthRoute
+              isAuthenticated={isSignedIn}
+              path='/questions/:id'
+              component={QuestionsShowPage} />
           </Switch>
         </div>
       </Router>

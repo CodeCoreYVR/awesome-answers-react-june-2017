@@ -1,6 +1,9 @@
 const DOMAIN = 'http://localhost:3000';
 const API_PATH = '/api/v1';
-const API_KEY = 'ApiKey ee1838b60e3e140e5580b3c9c79a178b4cd0a900ee680b04b10de6dd07eb3ba9';
+
+function getJwt () {
+  return window.localStorage.getItem('jwt');
+}
 
 // To keep all methods that do requests to Questions together, we'll put
 // them inside an object named `Question`.
@@ -11,7 +14,7 @@ const Question = {
     return fetch(
       `${DOMAIN}${API_PATH}/questions`,
       {
-        headers: {'Authorization': API_KEY}
+        headers: {'Authorization': `JWT ${getJwt()}`}
       }
     ).then(res => res.json());
   },
@@ -19,7 +22,7 @@ const Question = {
     return fetch(
       `${DOMAIN}${API_PATH}/questions/${id}`,
       {
-        headers: {'Authorization': API_KEY}
+        headers: {'Authorization': `JWT ${getJwt()}`}
       }
     ).then(res => res.json());
   },
@@ -30,7 +33,7 @@ const Question = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': API_KEY
+          'Authorization': `JWT ${getJwt()}`
         },
         body: JSON.stringify(attributes)
       }
