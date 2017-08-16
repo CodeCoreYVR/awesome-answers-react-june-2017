@@ -7,7 +7,7 @@ const API_KEY = 'cd2583a2eb688452be031bfdb79857c7133dad4c3d5c50bf7ec4d61635a9866
 const Question = {
   // getAll: function () { ... }
   // 👇 Property Method Shorthand. Syntax sugar for 👆
-  getAll() {
+  getAll () {
     return fetch(
       `${DOMAIN}${API_PATH}/questions`,
       {
@@ -38,4 +38,19 @@ const Question = {
   }
 };
 
-export { Question };
+const Token = {
+  post (attributes) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/tokens/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(attributes)
+      }
+    ).then(res => res.json());
+  }
+};
+
+export { Question, Token };
